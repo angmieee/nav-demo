@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: grey url(./img/space.jpg) no-repeat center center;
+            background-size: cover;
+        }
+        kbd{
+            border: 1px solid red;
+            display: inline-block;
+            width: 4em;
+            height: 4em;
+            text-transform: uppercase;
+            position: relative;
+        }
+        kbd>button{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            display: none;
+        }
+        kbd:hover>button{
+            display: inline-block;
+            
+        }
+        #mainXXX>div:nth-child(2){
+            margin-left: -22px;
+        }
+        #mainXXX>div:nth-child(3){
+            margin-left: -68px;
+        }
+        .wrapper{
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 12px 0 0 12px;
+        }
+        main{
+            text-align: center;
+            /* padding-top: 200px; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .key{
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(to bottom, #292929 0%, #111111 100%);
+            border: 1px solid #373737 ;
+            color: #C5C5C5 ;
+            border-radius: 6px;
+            box-shadow: 0 0 0 1px #1A1B1C, 0 0 0 2PX #1F2020, 0 2px 0 2px #080808;
+            display: inline-block;
+            align-items: center;
+            justify-content: center;
+            margin: 0 12px 12px 0;
+            font-family: keyboard, "Arial Rounded", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            line-height: 40px;
+        }
+        .key img{
+            width: 13px;
+            height: 13px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <main>
+        <div id="mainXXX" class="wrapper"></div>
+    </main>
+    <footer></footer>
+    <script>
+        var keys = [
+            ['q','w','e','r','t','y','u','i','o','p'],
+            ['a','s','d','f','g','h','j','k','l'],
+            ['z','x','c','v','b','n','m']
+        ]
+        var hash = {
+            'q': 'www.qq.com',
+            'w': 'weibo.com',
+            'e': 'ele.me',
+            'r': 'renren.com',
+            't': 'tianya.com',
+            'y': 'youtube.com',
+            'u': 'uc.com',
+            'i': 'iqiyi.com',
+            'o': 'opera.com',
+            'p': undefined,
+            'a': 'acfun.com',
+            's': 'sohu.com',
+            'z': 'zhihu.com',
+            'b': 'bilibili.com',
+            'm': undefined
+        }
+
+        var hashInLocalStorage = getFromLocalStorage('zzz')
+        
+        if(hashInLocalStorage){
+            hash = hashInLocalStorage
+        }
+        
+        for(var index = 0;index < keys.length;index++){
+            var divXXX = document.createElement('div')
+            mainXXX.appendChild(divXXX)
+            var row = keys[index]
+           for(var index2 = 0;index2 < row.length;index2++){
+                var kbdXXX = document.createElement('kbd')
+                kbdXXX.textContent = row[index2]
+                kbdXXX.className = 'key'
+                var buttonX = document.createElement('button')
+                buttonX.textContent = 'edit'
+                buttonX.id = row[index2]
+                var imgXXX = document.createElement('img')
+                imgXXX.src = 'https://' + hash[row[index2]] + '/favicon.ico'
+                buttonX.onclick = function(qwer){
+                    var button2 = qwer['target']
+                    var img2 = button2.previousSibling
+                    var key = qwer.target.id
+                    var x = prompt('输入一个网址')
+                    hash[key] = x
+                    img2.src = 'https://' + x + '/favicon.ico'
+                    localStorage.setItem('zzz', JSON.stringify(hash))
+                    console.log(hash)
+                }
+                kbdXXX.appendChild(imgXXX)
+                kbdXXX.appendChild(buttonX)
+                divXXX.appendChild(kbdXXX)
+                
+            }
+            
+        }
+        
+        document.onkeypress = function(skrskrskr){
+            var key = skrskrskr['key']
+            var website = hash[key]
+            window.open('https://' + website, '_blank')
+        }
+
+        function getFromLocalStorage(name){
+            return JSON.parse(localStorage.getItem(name) || 'null')
+        }
+    </script>
+</body>
+</html>
+
+
